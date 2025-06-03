@@ -15,9 +15,3 @@ case "$ID" in
     python$pyversion -m venv ~/PythonVenvs/bash
   ;;
 esac
-
-
-
-
-
-
