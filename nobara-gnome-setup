@@ -1,0 +1,15 @@
+#!/bin/bash
+
+# Designed for Nobara 41 with Gnome
+
+# Remove unecessary apps
+sudo dnf remove openrgb rhythmbox gedit
+
+# Add desired apps
+sudo dnf install xed fastfetch thunar
+
+# Add desired flatpacks
+flatpak install flathub com.vscodium.codium com.mattjakeman.ExtensionManager com.github.maoschanz.drawing -yyyyyy
+
+# A little reminder
+echo "To show day of week in top bar: open dconf editor > org > gnome > desktop > interface > toggle "clock-show-date" to on"
