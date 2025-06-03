@@ -1,0 +1,19 @@
+#!/bin/bash
+
+source /etc/os-release
+
+case "$ID" in
+  linuxmint|pop|ubuntu)
+    sudo apt update
+    sudo apt -y install virt-manager qemu-system-x86 libvirt-daemon-system
+    sudo systemctl enable libvirtd
+    sudo systemctl start libvirtd
+    echo ""
+    echo "Restart will be needed to allow virt-manager to connect to qemu"
+    ;;
+  fedora|nobara)
+    sudo dnf install @virtualization 
+  ;;
+esac
+
+echo "Download any saved VMs and activate in VMM"

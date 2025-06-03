@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# Change value that's ahead of 'EOF' if desired
+
+# Charging-start threshold:
+sudo tee -a /sys/class/power_supply/BAT0/charge_start_threshold > /dev/null << 'EOF'
+0 
+EOF
+
+# Charging-stop threshold:
+sudo tee -a /sys/class/power_supply/BAT0/charge_stop_threshold > /dev/null << 'EOF'
+70
+EOF

@@ -1,0 +1,23 @@
+#!/bin/bash
+
+echo "Determine which Python version you'd like (latest stable?)"
+read -p "What Python version do you want? " pyversion
+source /etc/os-release
+
+case "$ID" in
+  linuxmint|pop|ubuntu)
+    sudo apt update
+    sudo apt -y install python$pyversion python$pyversion-venv
+    python$pyversion -m venv ~/PythonVenvs/bash
+    ;;
+  fedora|nobara)
+    sudo dnf -y install python$pyversion python$pyversion-venv
+    python$pyversion -m venv ~/PythonVenvs/bash
+  ;;
+esac
+
+
+
+
+
+
