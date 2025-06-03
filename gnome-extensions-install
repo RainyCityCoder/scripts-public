@@ -1,0 +1,26 @@
+#!/bin/bash
+
+# command to get currently-install gnome extensions: gnome-extensions list
+# More info: https://docs.redhat.com/de/documentation/red_hat_enterprise_linux/9/html/customizing_the_gnome_desktop_environment/managing-gnome-shell-extensions-via-command-line_customizing-the-gnome-desktop-environment
+# More into: https://unix.stackexchange.com/questions/617288/command-line-tool-to-install-gnome-shell-extensions
+
+array=(weatheroclock@CleoMenezesJr.github.io
+just-perfection-desktop@just-perfection
+quarterwindows@troyready.com
+simple-timer@majortomvr.github.com
+system-monitor@gnome-shell-extensions.gcampax.github.com
+thinkpadthermal@moonlight.drive.vk.gmail.com
+lilypad@shendrew.github.io
+)
+
+for i in "${array[@]}"
+do
+    VERSION_TAG=$(curl -Lfs "https://extensions.gnome.org/extension-query/?search=${i}" | jq '.extensions[0] | .shell_version_map | map(.pk) | max')
+    wget -O ${i}.zip "https://extensions.gnome.org/download-extension/${i}.shell-extension.zip?version_tag=$VERSION_TAG"
+    gnome-extensions install --force ${EXTENSION_ID}.zip
+    if ! gnome-extensions list | grep --quiet ${i}; then
+        busctl --user call org.gnome.Shell.Extensions /org/gnome/Shell/Extensions org.gnome.Shell.Extensions InstallRemoteExtension s ${i}
+    fi
+    gnome-extensions enable ${i}
+    rm ${EXTENSION_ID}.zip
+done    
