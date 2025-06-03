@@ -1,0 +1,78 @@
+#!/bin/bash
+
+# Designed for Linux Mint 20 XFCE4 editions using xfconf
+
+
+##############   Basic Setup for script   ##############
+
+# Run in home dir
+cd ~
+# Set up error handling
+set -e
+trap 'echo Problem encountered on line $LINENO. Code: $?.' ERR
+# Create output file in home directory
+touch LM-auto-setup-output.txt
+# Create Counter
+counter=0
+
+
+##############   WiFi powersave   ##############
+
+sudo sed -i 's/3/2/' /etc/NetworkManager/conf.d/default-wifi-powersave-on.conf
+counter=$((counter+1))
+echo "${counter}) Thinkpad X1 Extreme WiFi powersave set up." | tee -a LM-auto-setup-output.txt
+
+
+##############   Remove unecessary apps   ##############
+
+sudo apt purge thunderbird transmission hexchat rhythmbox telnet warpinator pix -y
+counter=$((counter+1))
+echo "${counter}) Superfluous apps removed" | tee -a LM-auto-setup-output.txt
+
+
+##############   Update repos and upgrade default apps   ##############
+
+sudo apt update -qq
+counter=$((counter+1))
+echo "${counter}) APT update complete." | tee -a LM-auto-setup-output.txt
+sudo apt upgrade -y
+counter=$((counter+1))
+echo "${counter}) APT upgrade complete." | tee -a LM-auto-setup-output.txt
+
+
+##############   Install ATP packages   ##############
+
+sudo apt install -y steam htop xscreensaver* pdftk-java 
+counter=$((counter+1))
+echo "${counter}) APT package installations complete." | tee -a LM-auto-setup-output.txt
+
+
+##############   Install Flatpaks   ##############
+
+flatpak install flathub org.chromium.Chromium com.vscodium.codium -yyyy
+counter=$((counter+1))
+echo "${counter}) Flatpaks installed." | tee -a LM-auto-setup-output.txt
+# Note: 2 'y' flags per app
+
+
+##############   Cleanup   ##############
+
+sudo apt autoclean -y
+counter=$((counter+1))
+echo "${counter}) Autoclean successful." | tee -a LM-auto-setup-output.txt
+sudo apt autoremove -y
+counter=$((counter+1))
+echo "${counter}) Autoremove successful." | tee -a LM-auto-setup-output.txt
+
+
+##############   Set *one* workspace   ##############
+
+xfconf-query -c xfwm4 -p /general/workspace_count -s 1
+counter=$((counter+1))
+echo "${counter}) Workspaces set up." | tee -a LM-auto-setup-output.txt
+
+
+##############   Finished   ##############
+
+counter=$((counter+1))
+echo -e "\n${counter}) Done. You should see ${counter} seqential outputs." | tee -a LM-auto-setup-output.txt

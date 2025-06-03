@@ -1,0 +1,87 @@
+#!/bin/bash
+
+# Designed for Pop_OS! 22 with Gnome
+
+
+##############   Basic Setup for script   ##############
+
+# Run in home dir
+cd ~
+# Set up error handling
+set -e
+trap 'echo Problem encountered on line $LINENO. Code: $?.' ERR
+# Create output file in home directory
+touch Pop_OS-setup-log.txt
+# Create Counter
+counter=0
+
+
+##############   WiFi powersave   ##############
+
+sudo sed -i 's/3/2/' /etc/NetworkManager/conf.d/default-wifi-powersave-on.conf
+counter=$((counter+1))
+echo "${counter}) Thinkpad X1 Extreme WiFi powersave set up." | tee -a Pop_OS-setup-log.txt
+
+
+##############   Remove unecessary apps   ##############
+
+sudo apt purge nemo totem hexchat remmina nautilus geary gnome-chess hitori gnome-mahjongg gnome-mines gnome-nibbles gnome-sudoku gnome-taquin gnome-tetravex pidgin rhythmbox shotwell swell-foop tali transmission-gtk
+
+
+##############   Update repos and upgrade default apps   ##############
+
+sudo apt update -qq
+counter=$((counter+1))
+echo "${counter}) APT update complete." | tee -a Pop_OS-setup-log.txt
+sudo apt upgrade -y
+counter=$((counter+1))
+echo "${counter}) APT upgrade complete." | tee -a Pop_OS-setup-log.txt
+
+
+##############   Install ATP packages   ##############
+
+sudo apt install -y steam p7zip-full htop nvtop pdftk-java ubuntu-restricted-extras vlc gnome-tweaks thunar 
+counter=$((counter+1))
+echo "${counter}) APT package installations complete." | tee -a Pop_OS-setup-log.txt
+
+
+##############   Install Flatpaks   ##############
+
+flatpak install flathub org.chromium.Chromium com.vscodium.codium com.mattjakeman.ExtensionManager -yyyyyy
+counter=$((counter+1))
+echo "${counter}) Flatpaks installed." | tee -a Pop_OS-setup-log.txt
+# Note: 2 'y' flags per app
+
+
+##############   APT Cleanup   ##############
+
+sudo apt autoclean -y
+counter=$((counter+1))
+echo "${counter}) Autoclean successful." | tee -a Pop_OS-setup-log.txt
+sudo apt autoremove -y
+counter=$((counter+1))
+echo "${counter}) Autoremove successful." | tee -a Pop_OS-setup-log.txt
+
+
+##############   Set *one* workspace   ##############
+
+gsettings set org.gnome.mutter dynamic-workspaces false
+gsettings set org.gnome.desktop.wm.preferences num-workspaces 1
+
+
+##############   Set up gedit preferences   ##############
+
+gsettings set org.gnome.gedit.preferences.editor highlight-current-line false
+gsettings set org.gnome.gedit.preferences.editor display-line-numbers true
+gsettings set org.gnome.gedit.preferences.editor scheme 'cobalt'
+
+
+##############   Add VS Codium to launcher   ##############
+
+cp "/home/user/GitHub/scripts/VSCode/VS Codium.desktop" /home/user/.local/share/applications/
+
+
+##############   Finished   ##############
+
+counter=$((counter+1))
+echo -e "\n${counter}) Done. You should see ${counter} seqential outputs." | tee -a Pop_OS-setup-log.txt
