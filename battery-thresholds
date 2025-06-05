@@ -1,13 +1,17 @@
 #!/bin/bash
 
-# Change value that's ahead of 'EOF' if desired
+# This has so far only been tested in Fedora 42
 
-# Charging-start threshold:
-sudo tee -a /sys/class/power_supply/BAT0/charge_start_threshold > /dev/null << 'EOF'
-0 
-EOF
+# Get user input
+echo "What battery percentage should this laptop STOP charging at? (Number only)"
+read -p "Percentage: " entry 
+
+# Clean up input
+removecharacter="%"
+stopnumber="${entry//$removecharacter}"
+
+# Charging-start threshold: (default to 0, meaning charge anytime under stop threshold)
+sudo tee /sys/class/power_supply/BAT0/charge_start_threshold <<< "0" 
 
 # Charging-stop threshold:
-sudo tee -a /sys/class/power_supply/BAT0/charge_stop_threshold > /dev/null << 'EOF'
-70
-EOF
+sudo tee /sys/class/power_supply/BAT0/charge_stop_threshold <<< "$stopnumber"

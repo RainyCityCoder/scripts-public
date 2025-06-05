@@ -1,0 +1,20 @@
+#!/bin/bash
+
+# This is a development file for setting up flatpacks with interactive user input
+
+yeses="-"
+
+echo "what programs do you want? Press 'Enter', then 'Ctrl+D' when finished"
+
+while read line
+do
+    entry=("${entry[@]}" $line)
+done
+
+for entry in "${entry[@]}"
+do
+    yeses+="yy"
+done
+
+${entry[@]} ${yeses}
+

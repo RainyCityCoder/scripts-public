@@ -1,0 +1,41 @@
+#!/bin/bash
+
+# Designed for Fedora 42 with Gnome
+
+# Set up error handling
+set -e
+trap 'echo Problem encountered on line $LINENO. Code: $?.' ERR
+
+# Dark theme
+gsettings set org.gnome.desktop.interface gtk-theme Adwaita-dark
+
+# update dnf packages
+sudo dnf update
+
+# User input: apps to remove:
+read -p "What dnf packages should be REMOVED? (space between each) " removeentry
+
+# User input: apps to remove:
+read -p "What dnf packages should be INSTALLED? (space between each) " installentry
+
+# Remove unnecessary apps
+sudo dnf remove $removeentry
+#totem gnome-contacts gnome-calendar
+
+# Add desired apps
+sudo dnf install $installentry
+#dconf-editor vlc gnome-tweaks chromium
+
+# Set up Python venv for terminal
+python$pyversion -m venv ~/PythonVenvs/bash
+
+# Nvidia GPU driver install
+gpu="$(lspci -nn | grep VGA)"
+if [[ $gpu == *'NVIDIA'* ]]; then
+    sudo dnf -y install akmod-nvidia
+else
+    echo "No Nvidia GPU found. If this is incorrect; install drivers manually."
+fi
+
+# A little reminderbuild array from inputs in bash
+echo 'To show day of week in top bar: open dconf editor > org > gnome > desktop > interface > toggle "clock-show-date" to "on"'
