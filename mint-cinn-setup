@@ -51,14 +51,6 @@ counter=$((counter+1))
 echo "${counter}) APT package installations complete." | tee -a LM-auto-setup-output.txt
 
 
-##############   Install Flatpaks   ##############
-
-flatpak install flathub org.chromium.Chromium com.vscodium.codium -yyyy
-counter=$((counter+1))
-echo "${counter}) Flatpaks installed." | tee -a LM-auto-setup-output.txt
-# Note: 2 'y' flags per app
-
-
 ##############   Cleanup   ##############
 
 sudo apt autoclean -y
