@@ -3,10 +3,14 @@
 # Designed for Nobara 41 with Gnome
 
 # Remove unecessary apps
-sudo dnf remove openrgb rhythmbox gedit
+ead -p "What dnf packages should be REMOVED? (space between each) " removeentry
+sudo dnf -y remove $removeentry
+# openrgb rhythmbox gedit
 
 # Add desired apps
-sudo dnf install xed fastfetch thunar
+read -p "What dnf packages should be INSTALLED? (space between each) " installentry
+sudo dnf -y install $installentry
+# xed fastfetch thunar
 
 # Add desired flatpacks
 flatpak install flathub com.vscodium.codium com.mattjakeman.ExtensionManager com.github.maoschanz.drawing -yyyyyy

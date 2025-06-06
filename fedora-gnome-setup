@@ -9,19 +9,15 @@ trap 'echo Problem encountered on line $LINENO. Code: $?.' ERR
 # update dnf packages
 sudo dnf -y update
 
-# User input: apps to remove:
+# Remove unnecessary apps
 read -p "What dnf packages should be REMOVED? (space between each) " removeentry
+sudo dnf -y remove $removeentry
 # totem gnome-contacts gnome-calendar gnome-tour
 
-# User input: apps to remove:
-read -p "What dnf packages should be INSTALLED? (space between each) " installentry
-# dconf-editor vlc gnome-tweaks chromium fastfetch nvtop htop
-
-# Remove unnecessary apps
-sudo dnf -y remove $removeentry
-
 # Add desired apps
+read -p "What dnf packages should be INSTALLED? (space between each) " installentry
 sudo dnf -y install $installentry
+# dconf-editor vlc gnome-tweaks chromium fastfetch nvtop htop steam
 
 # Set up Python venv for terminal
 python -m venv ~/PythonVenvs/bash

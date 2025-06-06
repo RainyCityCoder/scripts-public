@@ -25,7 +25,9 @@ echo "${counter}) WiFi powersave set up." | tee -a LM-auto-setup-output.txt
 
 ##############   Remove unecessary apps   ##############
 
-sudo apt purge simple-scan thunderbird transmission-gtk rhythmbox warpinator pix -y
+read -p "What apt packages should be REMOVED? (space between each) " removeentry
+sudo apt purge $removeentry -y
+# simple-scan thunderbird transmission-gtk rhythmbox warpinator pix
 counter=$((counter+1))
 echo "${counter}) Superfluous apps removed" | tee -a LM-auto-setup-output.txt
 
@@ -42,7 +44,9 @@ echo "${counter}) APT upgrade complete." | tee -a LM-auto-setup-output.txt
 
 ##############   Install ATP packages   ##############
 
-sudo apt install -y steam htop xscreensaver* pdftk-java 
+read -p "What apt packages should be INSTALLED? (space between each) " installentry
+sudo apt install $installentry -y 
+# steam htop xscreensaver* pdftk-java 
 counter=$((counter+1))
 echo "${counter}) APT package installations complete." | tee -a LM-auto-setup-output.txt
 
