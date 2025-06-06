@@ -1,5 +1,12 @@
 # scripts-public
 
+## Table of Contents
+
+1. [Descriptoin](#description)
+1. [Prerequisites](#prerequisites)
+1. [Instructions](#instructions)
+1. [Problems and Issues](#issues)
+
 ### Description
 
 A collection of some useful scripts designed to streamline setup of new OS installs.
@@ -30,6 +37,20 @@ Run a given script in terminal with `bash <name>`, where `<name>` is the name of
 
 Some scripts will create output text files to which output is sent. These are usually created in the home directory for convenience.
 
-## Issues
+It is suggested to proceed in this order:
 
-For major issues, please open an issue and include the distribution name, version, behavior, expected behavior and/or suggestion.
+1. The OS setup script of your choice
+1. `battery-threasholds`
+1. `flatpak-setup`
+1. `python-setup`
+1. `node-install`
+1. `gnome-extensions-install` - if desired. 
+1. `virtual-machine-manager-setup` - if desired. 
+    * Please note Fedora/Gnome includes Boxes, which is an alternative to Virtual Machine Manager, and running this script may not be necessary/desireable in that case
+
+### Issues
+
+For major issues, please either: 
+
+* Open an issue in this repository and include the distribution name, version, desktop environment, behavior, steps to reproduce (if applicable), and expected behavior and/or suggestion.
+* Fork this repository and submit a pull request against this repository's `main` branch.
