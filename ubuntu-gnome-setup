@@ -49,14 +49,6 @@ counter=$((counter+1))
 echo "${counter}) APT package installations complete." | tee -a Ubuntu-setup-log.txt
 
 
-##############   Install Flatpaks   ##############
-
-flatpak install flathub org.chromium.Chromium com.vscodium.codium com.mattjakeman.ExtensionManager -yyyyyy
-counter=$((counter+1))
-echo "${counter}) Flatpaks installed." | tee -a Ubuntu-setup-log.txt
-# Note: 2 'y' flags per app
-
-
 ##############   APT Cleanup   ##############
 
 sudo apt autoclean -y

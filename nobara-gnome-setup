@@ -12,8 +12,5 @@ read -p "What dnf packages should be INSTALLED? (space between each) " installen
 sudo dnf -y install $installentry
 # xed fastfetch thunar
 
-# Add desired flatpacks
-flatpak install flathub com.vscodium.codium com.mattjakeman.ExtensionManager com.github.maoschanz.drawing -yyyyyy
-
 # A little reminder
 echo "To show day of week in top bar: open dconf editor > org > gnome > desktop > interface > toggle "clock-show-date" to on"
