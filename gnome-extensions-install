@@ -7,10 +7,11 @@
 array=(weatheroclock@CleoMenezesJr.github.io
 just-perfection-desktop@just-perfection
 quarterwindows@troyready.com
-simple-timer@majortomvr.github.com
-system-monitor@gnome-shell-extensions.gcampax.github.com
-thinkpadthermal@moonlight.drive.vk.gmail.com
 lilypad@shendrew.github.io
+system-monitor-next@paradoxxx.zero.gmail.com
+Vitals@CoreCoding.com
+thinkpadthermal@moonlight.drive.vk.gmail.com
+appindicatorsupport@rgcjonas.gmail.com
 )
 
 for i in "${array[@]}"
