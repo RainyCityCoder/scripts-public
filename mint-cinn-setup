@@ -16,6 +16,14 @@ touch LM-auto-setup-output.txt
 counter=0
 
 
+##############   Get user input   ##############
+
+read -p "What apt packages should be REMOVED? (space between each) " removeentry
+# simple-scan thunderbird transmission-gtk rhythmbox warpinator pix
+read -p "What apt packages should be INSTALLED? (space between each) " installentry
+# steam htop xscreensaver* pdftk-java 
+read -p "How many workspaces do you want? " workspacecount
+
 ##############   WiFi powersave   ##############
 
 sudo sed -i 's/3/2/' /etc/NetworkManager/conf.d/default-wifi-powersave-on.conf
@@ -25,9 +33,7 @@ echo "${counter}) WiFi powersave set up." | tee -a LM-auto-setup-output.txt
 
 ##############   Remove unecessary apps   ##############
 
-read -p "What apt packages should be REMOVED? (space between each) " removeentry
 sudo apt purge $removeentry -y
-# simple-scan thunderbird transmission-gtk rhythmbox warpinator pix
 counter=$((counter+1))
 echo "${counter}) Superfluous apps removed" | tee -a LM-auto-setup-output.txt
 
@@ -44,9 +50,7 @@ echo "${counter}) APT upgrade complete." | tee -a LM-auto-setup-output.txt
 
 ##############   Install ATP packages   ##############
 
-read -p "What apt packages should be INSTALLED? (space between each) " installentry
 sudo apt install $installentry -y 
-# steam htop xscreensaver* pdftk-java 
 counter=$((counter+1))
 echo "${counter}) APT package installations complete." | tee -a LM-auto-setup-output.txt
 
@@ -61,9 +65,9 @@ counter=$((counter+1))
 echo "${counter}) Autoremove successful." | tee -a LM-auto-setup-output.txt
 
 
-##############   Set *one* workspace   ##############
+##############   Set workspace count   ##############
 
-gsettings set org.cinnamon.desktop.wm.preferences num-workspaces 1
+gsettings set org.cinnamon.desktop.wm.preferences num-workspaces $workspacecount
 counter=$((counter+1))
 echo "${counter}) Workspaces set up." | tee -a LM-auto-setup-output.txt
 

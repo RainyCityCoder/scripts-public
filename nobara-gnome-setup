@@ -2,15 +2,25 @@
 
 # Designed for Nobara 41 with Gnome
 
-# Remove unecessary apps
-ead -p "What dnf packages should be REMOVED? (space between each) " removeentry
-sudo dnf -y remove $removeentry
+# Get user input
+read -p "What dnf packages should be REMOVED? (space between each) " removeentry
 # openrgb rhythmbox gedit
+read -p "What dnf packages should be INSTALLED? (space between each) " installentry
+# xed fastfetch thunar pdftk-java
+read -p "How many workspaces do you want? " workspacecount
+
+# Remove unecessary apps
+sudo dnf -y remove $removeentry
 
 # Add desired apps
-read -p "What dnf packages should be INSTALLED? (space between each) " installentry
 sudo dnf -y install $installentry
-# xed fastfetch thunar
+
+# Set workspace count
+gsettings set org.gnome.mutter dynamic-workspaces false
+gsettings set org.gnome.desktop.wm.preferences num-workspaces $workspacecount
 
 # A little reminder
 echo "To show day of week in top bar: open dconf editor > org > gnome > desktop > interface > toggle "clock-show-date" to on"
+
+# extra line for readability
+echo ""
