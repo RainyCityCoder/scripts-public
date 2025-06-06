@@ -1,20 +1,17 @@
 #!/bin/bash
 
-# This is an in-development file for setting up flatpacks with interactive user input
+# Set up error handling
+set -e
+trap 'echo Problem encountered on line $LINENO. Code: $?.' ERR
 
-yeses="-"
-
-echo "what programs do you want? Press 'Enter', then 'Ctrl+D' when finished"
+echo "Please enter each Application ID, a space between each. Press 'Enter', then 'Ctrl+D' when finished."
 
 while read line
 do
-    entry=("${entry[@]}" $line)
+    entryarray=("${entryarray[@]}" $line)
 done
 
-for entry in "${entry[@]}"
-do
-    yeses+="yy"
+for item in "${entryarray[@]}"
+do 
+    flatpak install flathub $item -yy
 done
-
-${entry[@]} ${yeses}
-
