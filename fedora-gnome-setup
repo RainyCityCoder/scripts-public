@@ -6,9 +6,6 @@
 set -e
 trap 'echo Problem encountered on line $LINENO. Code: $?.' ERR
 
-# Dark theme
-gsettings set org.gnome.desktop.interface gtk-theme Adwaita-dark
-
 # update dnf packages
 sudo dnf update
 
@@ -19,12 +16,12 @@ read -p "What dnf packages should be REMOVED? (space between each) " removeentry
 read -p "What dnf packages should be INSTALLED? (space between each) " installentry
 
 # Remove unnecessary apps
-sudo dnf remove $removeentry
-#totem gnome-contacts gnome-calendar
+sudo dnf -y remove $removeentry
+# totem gnome-contacts gnome-calendar gnome-tour
 
 # Add desired apps
-sudo dnf install $installentry
-#dconf-editor vlc gnome-tweaks chromium
+sudo dnf -y install $installentry
+# dconf-editor vlc gnome-tweaks chromium fastfetch nvtop htop
 
 # Set up Python venv for terminal
 python -m venv ~/PythonVenvs/bash
@@ -39,4 +36,4 @@ else
 fi
 
 # A little reminderbuild array from inputs in bash
-echo 'To show day of week in top bar: open dconf editor > org > gnome > desktop > interface > toggle "clock-show-date" to "on"'
+echo 'To show day of week in top bar: open dconf editor > org > gnome > desktop > interface > toggle "clock-show-weekday" to "on"'
