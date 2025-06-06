@@ -2,6 +2,10 @@
 
 # This has so far only been tested in Fedora 42
 
+# Set up error handling
+set -e
+trap 'echo Problem encountered on line $LINENO. Code: $?.' ERR
+
 # Get user input
 echo "What battery percentage should this laptop STOP charging at? (Number only)"
 read -p "Percentage: " entry 

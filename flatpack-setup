@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# This is a development file for setting up flatpacks with interactive user input
+# This is an in-development file for setting up flatpacks with interactive user input
 
 yeses="-"
 
