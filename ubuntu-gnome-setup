@@ -16,6 +16,14 @@ touch Ubuntu-setup-log.txt
 counter=0
 
 
+##############   Get user input   ##############
+
+read -p "What apt packages should be REMOVED? (space between each) " removeentry
+# nautilus totem thunderbird remmina rhythmbox
+read -p "What apt packages should be INSTALLED? (space between each) " installentry
+# steam p7zip-full htop nvtop pdftk-java ubuntu-restricted-extras vlc gnome-tweaks thunar firefox vlc thunar
+read -p "How many workspaces do you want? " workspacecount
+
 ##############   WiFi powersave   ##############
 
 sudo sed -i 's/3/2/' /etc/NetworkManager/conf.d/default-wifi-powersave-on.conf
@@ -25,9 +33,7 @@ echo "${counter}) WiFi powersave set up." | tee -a Ubuntu-setup-log.txt
 
 ##############   Remove unnecessary apps   ##############
 
-read -p "What apt packages should be REMOVED? (space between each) " removeentry
 sudo apt purge $removeentry -y
-# nautilus totem thunderbird remmina rhythmbox
 
 
 ##############   Update repos and upgrade default apps   ##############
@@ -42,9 +48,7 @@ echo "${counter}) APT upgrade complete." | tee -a Ubuntu-setup-log.txt
 
 ##############   Install ATP packages   ##############
 
-read -p "What apt packages should be INSTALLED? (space between each) " installentry
 sudo apt install $installentry -y 
-# steam p7zip-full htop nvtop pdftk-java ubuntu-restricted-extras vlc gnome-tweaks thunar firefox vlc thunar
 counter=$((counter+1))
 echo "${counter}) APT package installations complete." | tee -a Ubuntu-setup-log.txt
 
@@ -59,10 +63,10 @@ counter=$((counter+1))
 echo "${counter}) Autoremove successful." | tee -a Ubuntu-setup-log.txt
 
 
-##############   Set *one* workspace   ##############
+##############   Set workspace count   ##############
 
 gsettings set org.gnome.mutter dynamic-workspaces false
-gsettings set org.gnome.desktop.wm.preferences num-workspaces 1
+gsettings set org.gnome.desktop.wm.preferences num-workspaces $workspacecount
 
 
 ##############   Finished   ##############

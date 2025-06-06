@@ -6,18 +6,21 @@
 set -e
 trap 'echo Problem encountered on line $LINENO. Code: $?.' ERR
 
+# Get user input
+read -p "What dnf packages should be REMOVED? (space between each) " removeentry
+# totem gnome-contacts gnome-calendar gnome-tour
+read -p "What dnf packages should be INSTALLED? (space between each) " installentry
+# dconf-editor vlc gnome-tweaks chromium fastfetch nvtop htop steam pdftk-java
+read -p "How many workspaces do you want? " workspacecount
+
 # update dnf packages
 sudo dnf -y update
 
 # Remove unnecessary apps
-read -p "What dnf packages should be REMOVED? (space between each) " removeentry
 sudo dnf -y remove $removeentry
-# totem gnome-contacts gnome-calendar gnome-tour
 
 # Add desired apps
-read -p "What dnf packages should be INSTALLED? (space between each) " installentry
 sudo dnf -y install $installentry
-# dconf-editor vlc gnome-tweaks chromium fastfetch nvtop htop steam
 
 # Set up Python venv for terminal
 python -m venv ~/PythonVenvs/bash
@@ -25,6 +28,10 @@ echo -e "source ~/PythonVenvs/bash/bin/activate" >> /home/user/.bashrc
 
 # Bluetooth off at startup
 echo -e "AutoEnable=false" >> /etc/bluetooth/main.conf
+
+# Set workspace count
+gsettings set org.gnome.mutter dynamic-workspaces false
+gsettings set org.gnome.desktop.wm.preferences num-workspaces $workspacecount
 
 # Nvidia GPU driver install
 gpu="$(lspci -nn | grep VGA)"
