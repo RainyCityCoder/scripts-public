@@ -7,25 +7,28 @@ set -e
 trap 'echo Problem encountered on line $LINENO. Code: $?.' ERR
 
 # update dnf packages
-sudo dnf update
+sudo dnf -y update
 
 # User input: apps to remove:
 read -p "What dnf packages should be REMOVED? (space between each) " removeentry
+# totem gnome-contacts gnome-calendar gnome-tour
 
 # User input: apps to remove:
 read -p "What dnf packages should be INSTALLED? (space between each) " installentry
+# dconf-editor vlc gnome-tweaks chromium fastfetch nvtop htop
 
 # Remove unnecessary apps
 sudo dnf -y remove $removeentry
-# totem gnome-contacts gnome-calendar gnome-tour
 
 # Add desired apps
 sudo dnf -y install $installentry
-# dconf-editor vlc gnome-tweaks chromium fastfetch nvtop htop
 
 # Set up Python venv for terminal
 python -m venv ~/PythonVenvs/bash
 echo -e "source ~/PythonVenvs/bash/bin/activate" >> /home/user/.bashrc
+
+# Bluetooth off at startup
+echo -e "AutoEnable=false" >> /etc/bluetooth/main.conf
 
 # Nvidia GPU driver install
 gpu="$(lspci -nn | grep VGA)"
@@ -35,5 +38,13 @@ else
     echo "No Nvidia GPU found. If this is incorrect; install drivers manually."
 fi
 
-# A little reminderbuild array from inputs in bash
+# Show day in clock
+echo ""
 echo 'To show day of week in top bar: open dconf editor > org > gnome > desktop > interface > toggle "clock-show-weekday" to "on"'
+
+# Bluetooth off @ startup:
+echo ""
+echo "To disable bluetooth at startup: put AutoEnable=false in /etc/bluetooth/main.conf "
+
+# extra line for readability
+echo ""
