@@ -27,7 +27,8 @@ sudo dnf install $installentry
 #dconf-editor vlc gnome-tweaks chromium
 
 # Set up Python venv for terminal
-python$pyversion -m venv ~/PythonVenvs/bash
+python -m venv ~/PythonVenvs/bash
+echo -e "source ~/PythonVenvs/bash/bin/activate" >> /home/user/.bashrc
 
 # Nvidia GPU driver install
 gpu="$(lspci -nn | grep VGA)"
