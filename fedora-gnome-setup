@@ -8,9 +8,9 @@ trap 'echo Problem encountered on line $LINENO. Code: $?.' ERR
 
 # Get user input
 read -p "What dnf packages should be REMOVED? (space between each) " removeentry
-# totem gnome-contacts gnome-calendar gnome-tour
+# Example: totem gnome-contacts gnome-calendar gnome-tour
 read -p "What dnf packages should be INSTALLED? (space between each) " installentry
-# dconf-editor vlc gnome-tweaks chromium fastfetch nvtop htop steam pdftk-java
+# Example: dconf-editor vlc gnome-tweaks chromium fastfetch nvtop htop steam pdftk-java p7zip p7zip-plugins
 read -p "How many workspaces do you want? " workspacecount
 
 # update dnf packages
@@ -36,7 +36,7 @@ gsettings set org.gnome.desktop.wm.preferences num-workspaces $workspacecount
 # Nvidia GPU driver install
 gpu="$(lspci -nn | grep VGA)"
 if [[ $gpu == *'NVIDIA'* ]]; then
-    sudo dnf -y install akmod-nvidia
+    sudo dnf -y install akmod-nvidia xorg-x11-drv-nvidia-cuda libva-nvidia-driver
 else
     echo "No Nvidia GPU found. If this is incorrect; install drivers manually."
 fi
